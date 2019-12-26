@@ -19,22 +19,22 @@ class MainActivity : AppCompatActivity() {
         colorArray.add(
             PageColor(
                 R.color.screen_1_top,
-                R.color.screen_1_middle,
                 R.color.screen_1_bottom
+//                R.color.screen_1_middle
             )
         )
         colorArray.add(
             PageColor(
                 R.color.screen_2_top,
-                R.color.screen_2_middle,
-                R.color.screen_2_bottom
+                R.color.screen_2_bottom,
+                R.color.screen_2_middle
             )
         )
         colorArray.add(
             PageColor(
                 R.color.screen_3_top,
-                R.color.screen_3_middle,
                 R.color.screen_3_bottom
+//                R.color.screen_3_middle
             )
         )
         viewPager.colorArray = colorArray

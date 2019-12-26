@@ -37,8 +37,8 @@ class GradientViewPager : ViewPager {
                             colorArray[position].colorMiddle?.let {
                                 intArrayOf(
                                     ContextCompat.getColor(context, colorArray[position].colorTop),
-                                    ContextCompat.getColor(context, colorArray[position].colorBottom),
-                                    ContextCompat.getColor(context, it)
+                                    ContextCompat.getColor(context, it),
+                                    ContextCompat.getColor(context, colorArray[position].colorBottom)
                                 )
                             } ?: intArrayOf(
                                 ContextCompat.getColor(context, colorArray[position].colorTop),
@@ -60,6 +60,30 @@ class GradientViewPager : ViewPager {
                                     ContextCompat.getColor(context, colorArray[position].colorMiddle!!),
                                     ContextCompat.getColor(context, colorArray[position + 1].colorMiddle!!)
                                 ) as Int
+                            } ?: run {
+                                val secondColorMiddle: Int = argbEvaluator.evaluate(
+                                    0.5F,
+                                    colorArray[position + 1].colorTop,
+                                    colorArray[position + 1].colorBottom
+                                ) as Int
+                                colorMiddle = argbEvaluator.evaluate(
+                                    positionOffset,
+                                    ContextCompat.getColor(context, colorArray[position].colorMiddle!!),
+                                    ContextCompat.getColor(context, secondColorMiddle)
+                                ) as Int
+                            }
+                        } ?: run {
+                            val firstColorMiddle: Int = argbEvaluator.evaluate(
+                                0.5F,
+                                colorArray[position].colorTop,
+                                colorArray[position].colorBottom
+                            ) as Int
+                            colorArray[position + 1].colorMiddle?.let {
+                                colorMiddle = argbEvaluator.evaluate(
+                                    positionOffset,
+                                    ContextCompat.getColor(context, firstColorMiddle),
+                                    ContextCompat.getColor(context, colorArray[position + 1].colorMiddle!!)
+                                ) as Int
                             }
                         }
 
@@ -72,7 +96,7 @@ class GradientViewPager : ViewPager {
                         background = GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
                             colorMiddle?.let {
-                                intArrayOf(colorTop, colorBottom, it)
+                                intArrayOf(colorTop, it, colorBottom)
                             } ?: intArrayOf(colorTop, colorBottom)
                         )
                     }
@@ -83,8 +107,8 @@ class GradientViewPager : ViewPager {
                             colorArray[position].colorMiddle?.let {
                                 intArrayOf(
                                     ContextCompat.getColor(context, colorArray[position].colorTop),
-                                    ContextCompat.getColor(context, colorArray[position].colorBottom),
-                                    ContextCompat.getColor(context, it)
+                                    ContextCompat.getColor(context, it),
+                                    ContextCompat.getColor(context, colorArray[position].colorBottom)
                                 )
                             } ?: intArrayOf(
                                 ContextCompat.getColor(context, colorArray[position].colorTop),
@@ -105,6 +129,17 @@ class GradientViewPager : ViewPager {
                                 ContextCompat.getColor(context, colorArray[position].colorMiddle!!),
                                 ContextCompat.getColor(context, R.color.white)
                             ) as Int
+                        } ?: run {
+                            val firstColorMiddle: Int = argbEvaluator.evaluate(
+                                0.5F,
+                                colorArray[position].colorTop,
+                                colorArray[position].colorBottom
+                            ) as Int
+                            colorMiddle = argbEvaluator.evaluate(
+                                positionOffset,
+                                ContextCompat.getColor(context, firstColorMiddle),
+                                ContextCompat.getColor(context, R.color.white)
+                            ) as Int
                         }
 
                         val colorBottom = argbEvaluator.evaluate(
@@ -116,7 +151,7 @@ class GradientViewPager : ViewPager {
                         background = GradientDrawable(
                             GradientDrawable.Orientation.TOP_BOTTOM,
                             colorMiddle?.let {
-                                intArrayOf(colorTop, colorBottom, it)
+                                intArrayOf(colorTop, it, colorBottom)
                             } ?: intArrayOf(colorTop, colorBottom)
                         )
                     }
