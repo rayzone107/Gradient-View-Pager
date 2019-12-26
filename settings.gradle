@@ -1,0 +1,2 @@
+include ':app', ':gradientviewpager'
+rootProject.name='GradientViewPagerSample'
